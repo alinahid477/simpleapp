@@ -1,0 +1,44 @@
+FROM maven:3.8.5-openjdk-18-slim
+
+RUN java --version
+
+RUN apt-get update && apt-get install git -y
+
+ENV DOCKER_VERSION=20.10.8
+RUN curl -fsSLO https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKER_VERSION}.tgz \
+  && tar xzvf docker-${DOCKER_VERSION}.tgz --strip 1 \
+                 -C /usr/local/bin docker/docker \
+  && rm docker-${DOCKER_VERSION}.tgz
+
+
+# RUN mkdir -p /home/simple/.ssh/
+# RUN mkdir -p /home/simple/.kube/
+# RUN mkdir -p /home/simple/binaries/
+
+
+# COPY tilttunnel/create-tunnel.sh /home/simple/
+# RUN chmod +x /home/simple/create-tunnel.sh
+
+# COPY tilttunnel/id_rsa /home/simple/.ssh/
+# RUN chmod 600 /home/simple/.ssh/id_rsa
+
+# COPY tilttunnel/tilt /usr/local/bin/
+# RUN chmod +x /usr/local/bin/tilt
+
+# COPY tilttunnel/kubeconfig /home/simple/.kube/config
+# COPY tilttunnel/tanzu-framework-linux-amd64.tar /home/simple/binaries/
+# COPY tilttunnel/install-tanzu-cli.sh /home/simple/
+# RUN curl -L https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl -o /usr/local/bin/kubectl \
+# 	&& chmod +x /usr/local/bin/kubectl
+# RUN chmod +x /home/simple/install-tanzu-cli.sh
+# RUN /home/simple/install-tanzu-cli.sh
+
+# USER 1000
+
+# RUN echo "simple:simple" | chpasswd && adduser simple sudo
+
+
+# ENV PATH="$PATH:/home/simple/bin"
+# RUN echo $PATH
+
+CMD ["/bin/bash"]

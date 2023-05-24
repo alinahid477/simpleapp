@@ -1,0 +1,4 @@
+app:
+    greeting-text: ${GREETING_TEXT}
+
+    

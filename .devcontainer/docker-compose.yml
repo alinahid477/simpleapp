@@ -1,0 +1,32 @@
+version: "3"
+
+services:
+  
+  simpleapp:
+    # user: 1000:1000
+    container_name: simpleapp
+    build:
+      context: .
+      dockerfile: ./Dockerfile.devcontainer
+    volumes:
+      - ../:/workspace:cached
+    environment:
+      GREETING_TEXT: Hello from simple app !!      
+    command: sleep infinity
+    networks: 
+      simpleapp:
+        ipv4_address: 172.24.0.2
+    ports:
+      - 8080:8080
+    restart: unless-stopped
+    stdin_open: true
+    extra_hosts:
+      - "kubernetes:127.0.0.1"
+
+networks:
+  simpleapp:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.24.0.0/16
+        
